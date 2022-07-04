@@ -1,5 +1,6 @@
 import random
 import math
+import time
 
 from numpy import column_stack
 
@@ -160,7 +161,7 @@ class Poblacion_N_Reinas():
         self.poblacion = poblacion_mas_apta
 
     def repoblar(self):
-        # Método de la clase Poblacion_N_Reinas que permite repoblar la selección de los 
+        # Método de la clase Poblacion_N_Reinas que permite repoblar tras la selección de los 
         # individuos más aptos de una población, aplicando cruzamiento y mutación de forma aleatoria
         # sobre dichos individuos.
 
@@ -178,7 +179,7 @@ class Poblacion_N_Reinas():
             # Aleatoriamente elegimos si nos quedamos con el individuo obtenido por cruzamiento 
             # (indicador = 1) o si tomamos el afectado por mutación (indicador = 0):
             indicador = random.randint(0, 1)
-            if indicador == 1:
+            if indicador == 0:
                 repoblacion.append(individuo_cruza)
             else:
                 configuracion_mutacion = individuo_cruza.mutar()
@@ -248,6 +249,14 @@ def mostrar_resultados(dimension_tablero, individuos_solucion, min_cant_solucion
             for i in range (cant_soluciones):
                 poblacion_solucion[i].imprimir_en_tablero()
 
+def decorador(function):
+	def wrapper(*args, **kwargs):
+		start_time = time.time()
+		function(*args, *kwargs)
+		print("---\nResolución alcanzada en {s} segundos".format(s = (time.time() - start_time)))
+	return wrapper
+
+@decorador
 def Algoritmo_Genetico_N_Reinas(dimension_tablero = 5 , cant_individuos = 70 , indice_seleccion = 0.3 , max_iteraciones = 10000 , min_cant_soluciones = 1 ):
     # Función que permite hallar soluciones para el problema de N_reinas aplicando un algorítmo genético.
     # Recibe los siguientes parámetros, los cuales poseen asignados valores por defecto:
@@ -280,4 +289,4 @@ def Algoritmo_Genetico_N_Reinas(dimension_tablero = 5 , cant_individuos = 70 , i
 
 # Invocamos al mail seteando los parámetros para el proceso; si no se los pasamos toma
 # valores por defecto para todos ellos:
-Algoritmo_Genetico_N_Reinas ( 10 , 100 , 0.3 , 10000 , 1)
+Algoritmo_Genetico_N_Reinas ( 5 , 100 , 0.3 , 10000 , 1)
